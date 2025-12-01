@@ -132,6 +132,9 @@ if [ ! -f "$INSTALL_DIR/usr/lib/libc.so.6" ]; then
     download_latest "libtasn1-6" "$POOL_MAIN/libt/libtasn1-6/" 'libtasn1-6_[^"<>]*_amd64.deb'
     download_latest "libp11-kit0" "$POOL_MAIN/p/p11-kit/" 'libp11-kit0_[^"<>]*_amd64.deb'
     download_latest "libffi8" "$POOL_MAIN/libf/libffi/" 'libffi8_[^"<>]*_amd64.deb'
+    download_latest "libavahi-common3" "$POOL_MAIN/a/avahi/" 'libavahi-common3_[^"<>]*_amd64.deb'
+    download_latest "libavahi-client3" "$POOL_MAIN/a/avahi/" 'libavahi-client3_[^"<>]*_amd64.deb'
+    download_latest "libdbus-1-3" "$POOL_MAIN/d/dbus/" 'libdbus-1-3_[^"<>]*_amd64.deb'
     
     # Install
     find . -name "*.so*" -exec cp -L -f {} "$INSTALL_DIR/usr/lib/" \;
@@ -156,6 +159,7 @@ cat <<EOF > "$WRAPPER"
 export LD_LIBRARY_PATH=$INSTALL_DIR/usr/lib:$INSTALL_DIR/usr/lib/x86_64-linux-gnu
 export BOX64_LD_LIBRARY_PATH=$INSTALL_DIR/usr/lib:$INSTALL_DIR/usr/lib/x86_64-linux-gnu
 export BOX64_LD_PRELOAD=$INSTALL_DIR/usr/lib/libcups.so.2
+export BOX64_PREFER_EMULATED=1
 exec $BOX64_PATH $INSTALL_DIR/usr/lib/cups/filter/pt2500Filter "\$@"
 EOF
 chmod +x "$WRAPPER"
@@ -165,7 +169,10 @@ log "Installing PPD and fixing symlinks..."
 mkdir -p /usr/share/cups/model/Pantum
 cp "$INSTALL_DIR/usr/share/cups/model/Pantum/Pantum P2510 Series.ppd" /usr/share/cups/model/Pantum/
 # Fix for PPD expecting pt2510Filter
-ln -sf "$INSTALL_DIR/usr/lib/cups/filter/pt2500Filter" "$INSTALL_DIR/usr/lib/cups/filter/pt2510Filter"
+# IMPORTANT: Must point to the WRAPPER in /usr/lib/cups/filter/, NOT the binary in /opt/pantum-x86
+ln -sf "/usr/lib/cups/filter/pt2500Filter" "/usr/lib/cups/filter/pt2510Filter"
+# Also link in system cups directory
+ln -sf "$INSTALL_DIR/usr/lib/cups/filter/pt2500Filter" "/usr/lib/cups/filter/pt2510Filter"
 
 # 7. Configure CUPS
 log "Configuring CUPS..."

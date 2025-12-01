@@ -38,7 +38,7 @@ fi
 if [ ! -f "$DRIVER_DEB" ]; then
     log "Driver package not found locally. Attempting download from GitHub..."
     # Download from the user's repo
-    GITHUB_URL="https://github.com/remello/draiveri-na-govno/raw/main/pantum_driver_v99.deb"
+    GITHUB_URL="https://github.com/remello/draiveri-na-govno/raw/main/Pantum_P2516/pantum_driver_v99.deb"
     if wget -q --show-progress "$GITHUB_URL" -O "$DRIVER_DEB"; then
         log "Driver downloaded successfully."
     else

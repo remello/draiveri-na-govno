@@ -12,23 +12,30 @@ Automated printer setup and management tools for Raspberry Pi.
 
 ## Pantum P2516 Driver Installation
 
-### Quick Install (Bundled Installer)
+### Quick Install
 
 The easiest way to install the Pantum P2516 driver on your Raspberry Pi:
 
+**Option 1: Download the script**
 ```bash
-# 1. Copy the bundled installer to your Raspberry Pi
-scp install_pantum_bundled.sh relo@rpi1.local:~/
+# Download and run directly from GitHub
+curl -sSL https://raw.githubusercontent.com/remello/draiveri-na-govno/main/Pantum_P2516/pantum.sh | sudo bash
+```
+
+**Option 2: Copy from your computer**
+```bash
+# 1. Copy the installer to your Raspberry Pi
+scp Pantum_P2516/pantum.sh relo@rpi1.local:~/
 
 # 2. SSH into your Raspberry Pi and run the installer
-ssh relo@rpi1.local "bash install_pantum_bundled.sh"
+ssh relo@rpi1.local "sudo bash pantum.sh"
 ```
 
 Replace `relo@rpi1.local` with your Raspberry Pi's username and hostname/IP address.
 
 ### What It Does
 
-The bundled installer (`install_pantum_bundled.sh`):
+The bundled installer (`Pantum_P2516/pantum.sh`):
 - Installs Box64 for x86 emulation
 - Extracts and configures the Pantum P2516 driver
 - Downloads required x86 libraries (libcups, glibc, etc.)
@@ -91,13 +98,11 @@ Repository: [github.com/remello/draiveri-na-govno](https://github.com/remello/dr
 
 ```
 .
-├── install_pantum_bundled.sh    # Self-contained Pantum driver installer
-├── setup_pantum.sh              # Alternative installer (requires external .deb)
 ├── Pantum_P2516/
-│   └── pantum.sh                # Clean installer with GitHub download
-├── install_wifi_system.sh       # Wi-Fi hotspot setup
-├── print_bot.py                 # Telegram printer bot
-└── README.md                    # This file
+│   └── pantum.sh                # Self-contained bundled installer (recommended)
+├── setup_pantum.sh              # Alternative installer (requires external .deb)
+├── Xerox_Phaser_3010/           # Xerox printer drivers
+└── README.md                    # Installation guide
 ```
 
 ---

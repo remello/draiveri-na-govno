@@ -1,0 +1,31 @@
+# System files
+.DS_Store
+*.swp
+*.swo
+*~
+
+# Test files
+print_test.pdf
+*.pdf
+
+# Downloaded driver packages (keep bundled installer, ignore source packages)
+Pantum Linux Driver*/
+Pantum Ubuntu Driver*/
+pantum_driver/
+*.deb
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+
+# Logs
+*.log
+
+# Temporary files
+temp_extract/
+x86_libs/
